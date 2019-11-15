@@ -3,63 +3,99 @@
 
 // Write your Javascript code.
 
-var currentTurn = "X";
+//var currentTurn = "X";
 
-document.getElementById("turn").innerText = "It is player " + currentTurn + "'s turn.";
+//document.getElementById("turn").innerText = "It is player " + currentTurn + "'s turn.";
 
-var squares = document.getElementsByClassName("square");
+//var squares = document.getElementsByClassName("square");
+//for (var i = 0; i < squares.length; i++)
+//{
+//    squares[i].addEventListener('click', onClick);
+//}
+
+
+
+//function onClick(event)
+//{
+//    event.preventDefault();
+//    if (!event.target.innerText)
+//    {
+//        event.target.innerHTML = currentTurn;
+//        if(!checkForWin()) nextTurn();
+//    }
+//}
+
+//function nextTurn()
+//{
+//    if (currentTurn === "X") {
+//        currentTurn = "0";
+//    }
+//    else
+//    {
+//        currentTurn = "X";
+//    }
+//    document.getElementById("turn").innerText = "It is player " + currentTurn + "'s turn.";
+//}
+
+//function checkForWin()
+//{
+//    for (var i = 0; i < 9; i+=3)
+//    {
+//        if (squares[i].innerText && squares[i].innerText === squares[i + 1].innerText && squares[i + 1].innerText === squares[i + 2].innerText)
+//        {
+//            declareWinner();
+//            return true;
+//        }
+
+//        for (var j = 0; j < 3; j++)
+//        {
+//            if (squares[j].innerText && squares[j].innerText === squares[j + 3].innerText && squares[j + 3].innerText === squares[j + 6].innerText) {
+//                declareWinner();
+//                return true;
+//            }
+//        }
+//    }
+
+//    return false;
+//}
+
+//function declareWinner()
+//{
+//    document.getElementById("turn").innerText = "Player "+ currentTurn + " wins!"
+//}
+
+
+//////////////////////////// START OF CHECKERS
+
+var squares = document.querySelectorAll("#checkers-board > .square");
 for (var i = 0; i < squares.length; i++)
 {
-    squares[i].addEventListener('click', onClick);
+    squares[i].addEventListener('dragenter', onDragEnter);
+    squares[i].addEventListener('dragleave', onDragLeave);
+    squares[i].addEventListener('dragstart', onDragStart);
+    squares[i].addEventListener('dragend', onDragEnd);
 }
 
-
-
-function onClick(event)
+function onDragEnter(event)
 {
-    event.preventDefault();
-    if (!event.target.innerText)
-    {
-        event.target.innerHTML = currentTurn;
-        if(!checkForWin()) nextTurn();
-    }
+    if (event.target.classList.contains("checker")) return;
+    if (event.target.classList.contains("red")) return;
+    if (event.target.children.length > 0) return;
+    event.target.style.backgroundColor = "gold";
+    document.getElementById("toX").value = event.target.dataset.x;
+    document.getElementById("toY").value = event.target.dataset.y;
 }
 
-function nextTurn()
+function onDragLeave(event)
 {
-    if (currentTurn === "X") {
-        currentTurn = "0";
-    }
-    else
-    {
-        currentTurn = "X";
-    }
-    document.getElementById("turn").innerText = "It is player " + currentTurn + "'s turn.";
+    event.target.style.backgroundColor = null;
 }
 
-function checkForWin()
-{
-    for (var i = 0; i < 9; i+=3)
-    {
-        if (squares[i].innerText && squares[i].innerText === squares[i + 1].innerText && squares[i + 1].innerText === squares[i + 2].innerText)
-        {
-            declareWinner();
-            return true;
-        }
-
-        for (var j = 0; j < 3; j++)
-        {
-            if (squares[j].innerText && squares[j].innerText === squares[j + 3].innerText && squares[j + 3].innerText === squares[j + 6].innerText) {
-                declareWinner();
-                return true;
-            }
-        }
-    }
-
-    return false;
+function onDragStart(event) {
+    document.getElementById("fromX").value = event.target.dataset.x;
+    document.getElementById("fromY").value = event.target.dataset.y;
 }
 
-function declareWinner()
-{
-    document.getElementById("turn").innerText = "Player "+ currentTurn + " wins!"
+function onDragEnd(event) {
+    document.getElementById("checkers-form").submit();
 }

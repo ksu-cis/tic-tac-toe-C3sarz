@@ -50,7 +50,14 @@ body {
      grid-template-rows: 1fr 1fr 1fr;
  }
     */
- .grid{
+
+
+/*
+    Start of Tic tac toe SERVER
+*/
+
+
+ /*.grid{
      display:flex;
      flex-direction: column;
  }
@@ -79,4 +86,36 @@ body {
     height: 100px;
     font-size: 90px;
     text-align: center;
+}*/
+
+/*
+    END OF TICTACTOE
+*/
+
+#checkers-board {
+    display: grid;
+    width: calc(8*75px);
+    grid-template-columns: repeat(8,1fr);
+    grid-template-rows: repeat(8,1fr);
+}
+
+#checkers-board > .square{
+    width: 75px;
+    height: 75px;
+}
+
+    #checkers-board > .square > .checker{
+        width: 60px;
+        height: 60px;
+        border: solid 5px gray;
+        border-radius: 35px;
+        margin: 2.5px;
+    }
+
+.red{
+    background-color: red;
+}
+
+.black{
+    background-color: black;
 }
